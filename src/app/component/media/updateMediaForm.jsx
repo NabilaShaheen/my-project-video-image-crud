@@ -36,8 +36,6 @@ export default function UpdateMediaForm({ mediaItem, onUpdate, onCancel }) {
     }
   };
   
-  
-
   return (
     <form onSubmit={handleSubmit} className="mb-6 p-4 bg-white shadow rounded">
       <h2 className="text-xl font-semibold mb-4">Edit Media</h2>
