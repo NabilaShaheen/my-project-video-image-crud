@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import UpdateMediaForm from './updateMediaForm'; // Ensure the path is correct
+import UpdateMediaForm from './UpdateMediaForm'; // Ensure the path is correct
 
 export default function MediaList() {
   const [media, setMedia] = useState([]);

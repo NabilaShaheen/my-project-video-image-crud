@@ -1,10 +1,11 @@
-// src/components/UpdateForm.jsx
+'use client';
 import { useState } from 'react';
 
 export default function UpdateMediaForm({ mediaItem, onUpdate, onCancel }) {
   const [title, setTitle] = useState(mediaItem.title || '');
   const [description, setDescription] = useState(mediaItem.description || '');
   const [url, setUrl] = useState(mediaItem.url || '');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,22 +17,35 @@ export default function UpdateMediaForm({ mediaItem, onUpdate, onCancel }) {
         },
         body: JSON.stringify({ title, description, url }),
       });
-
+  
       if (!res.ok) {
+        const errorData = await res.json();
+        console.log('Error response:', errorData);
         throw new Error('Network response was not ok');
       }
-
+  
       const updatedItem = await res.json();
       console.log('Updated media:', updatedItem);
+      setSuccessMessage('Media updated successfully!');
       onUpdate(updatedItem);
+  
+      // Clear the success message after a delay
+      setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
       console.error('Error updating media:', error);
     }
   };
+  
+  
 
   return (
     <form onSubmit={handleSubmit} className="mb-6 p-4 bg-white shadow rounded">
       <h2 className="text-xl font-semibold mb-4">Edit Media</h2>
+      {successMessage && (
+        <div className="mb-4 p-2 bg-green-500 text-white rounded">
+          {successMessage}
+        </div>
+      )}
       <input
         type="text"
         value={title}
